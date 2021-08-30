@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -138,3 +139,9 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+REGISTRATION_OPEN = True
+
+SIMPLE_BACKEND_REDIRECT_URL = '/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
