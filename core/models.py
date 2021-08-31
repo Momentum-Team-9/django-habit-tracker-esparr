@@ -27,9 +27,9 @@ class DailyRecord(models.Model):
     habit = models.ForeignKey(
         Habit, on_delete=models.CASCADE, related_name="daily_records")
 
-    class Meta:
-        constraints = models.UniqueConstraint(
-            fields=['habit', 'date'], name='unique_record')
+    # class Meta:
+    #     constraints = models.UniqueConstraint(
+    #         fields=['habit', 'date'], name='unique_record')
 
     def __repr__(self):
         return f"<Daily Record date={self.date}>"
