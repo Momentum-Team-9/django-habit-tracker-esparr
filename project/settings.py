@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import django_on_heroku
 import os
 from pathlib import Path
 
@@ -145,3 +146,6 @@ REGISTRATION_OPEN = True
 SIMPLE_BACKEND_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_on_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
