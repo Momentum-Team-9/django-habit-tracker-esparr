@@ -28,7 +28,7 @@ class DailyRecord(models.Model):
         Habit, on_delete=models.CASCADE, related_name="daily_records")
 
     class Meta:
-        constraint = models.UniqueConstraint(
+        constraints = models.UniqueConstraint(
             fields=['habit', 'date'], name='unique_record')
 
     def __repr__(self):
