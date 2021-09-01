@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero is-dark p-5">
+    <h1 class="title is-white">Create a Snippet</h1>
+    <p class="subtitle is-white"><a href="{% url 'list_habits' %}">Return to All Habits</a></p>
+</section>
+
+{% load bulma_tags %}
+{# Display a form #}
+<div class="control m-5">
+    <form class="form" action="{% url 'new_habit' %}" method="POST">
+    {% csrf_token %}
+    {{ form|bulma }}
+    <div class="field">
+        <button type="submit" class="button is-primary">Save</button>
+    </div>
+</form>
+</div>
+{% endblock %}

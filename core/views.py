@@ -1,3 +1,4 @@
+import core
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Habit, DailyRecord
 from .forms import HabitForm
@@ -27,3 +28,17 @@ def view_habit(request, pk):
         request, "habits/view_habit.html",
         {"habit": habit, "pk": pk}
     )
+
+
+@login_required
+def new_habit(request):
+    if request.method == "GET":
+        form = HabitForm()
+    else:
+        form = HabitForm(data=request.POST)
+        if form.is_valid():
+            snippet = form.save(commit=False)
+            snippet.save()
+            return redirect(to="list_habits")
+
+    return render(request, "habits/add_habit.html", {"form": form})

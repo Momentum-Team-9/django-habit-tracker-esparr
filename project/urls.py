@@ -24,6 +24,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("habits/", views.list_habits, name="list_habits"),
     path("habits/<int:pk>", views.view_habit, name="view_habit"),
+    path("habits/new", views.new_habit, name="new_habit"),
 ]
 
 if settings.DEBUG:
