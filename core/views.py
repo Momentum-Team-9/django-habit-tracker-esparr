@@ -41,4 +41,4 @@ def new_habit(request):
             snippet.save()
             return redirect(to="list_habits")
 
-    return render(request, "habits/add_habit.html", {"form": form})
+    return render(request, "habits/new_habit.html", {"form": form})
