@@ -16,7 +16,7 @@ def index(request):
 
 @login_required
 def list_habits(request):
-    habits = get_object_or_404(Habit)
+    habits = Habit.objects.filter()
     return render(request, "habits/list_habits.html", {"habits": habits})
 
 
