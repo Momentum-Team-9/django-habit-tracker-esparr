@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<section class="hero is-small is-primary-dark p-5">
+<h1 class="title is-white">All Habits</h1>
+
+</section>
+
+{% for habit in habits %}
+<section class="is-flex">
+    
+    <div class="container pt-5">
+        
+        <div class="columns"> 
+            <div class="column">
+        
+                <div class="card">
+                    {% if habit.title %}
+                    <h4 class="title is-4 is-primary card-header p-3">{{ habit.title }}</h4>
+                    {% endif %} 
+
+                    <div class="card-content">
+
+                        {% if habit.goal %}
+                        <div class="content">
+                            <div>Goal: {{ habit.goal }}</div>
+                        {% endif %} 
+                        {% if habit.created_at %}
+                            <div class="content is-italic">Created on {{ habit.created_at}}</div>
+                        {% endif %}
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="{% url 'view_habit' pk=habit.pk %}" class="card-footer-item">View</a><br />
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+{% endblock %}
