@@ -28,8 +28,8 @@ class DailyRecord(models.Model):
         Habit, on_delete=models.CASCADE, related_name="daily_records", null=True, blank=True)
 
     class Meta:
-        constraints = models.UniqueConstraint(
-            fields=['habit', 'date'], name='unique_record')
+        constraints = [models.UniqueConstraint(
+            fields=['habit', 'date'], name='unique_record')]
 
     def __str__(self):
         return f"{self.habit} {self.date}"
