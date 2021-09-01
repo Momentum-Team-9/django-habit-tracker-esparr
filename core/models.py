@@ -16,7 +16,7 @@ class Habit(models.Model):
     goal = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="habits")
+        User, on_delete=models.CASCADE, related_name="habits", null=True, blank=True)
 
     def __str__(self):
         return f"{self.title}"
@@ -25,14 +25,11 @@ class Habit(models.Model):
 class DailyRecord(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     habit = models.ForeignKey(
-        Habit, on_delete=models.CASCADE, related_name="daily_records")
+        Habit, on_delete=models.CASCADE, related_name="daily_records", null=True, blank=True)
 
-    # class Meta:
-    #     constraints = models.UniqueConstraint(
-    #         fields=['habit', 'date'], name='unique_record')
-
-    def __repr__(self):
-        return f"<Daily Record date={self.date}>"
+    class Meta:
+        constraints = models.UniqueConstraint(
+            fields=['habit', 'date'], name='unique_record')
 
     def __str__(self):
-        return f"{self.date}"
+        return f"{self.habit} {self.date}"
