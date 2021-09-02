@@ -146,6 +146,8 @@ REGISTRATION_OPEN = True
 
 SIMPLE_BACKEND_REDIRECT_URL = '/'
 
+LOGIN_REDIRECT_URL = "/habits/"
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_on_heroku.settings(locals())

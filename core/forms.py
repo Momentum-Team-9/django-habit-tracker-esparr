@@ -17,4 +17,5 @@ class DailyRecordForm(forms.ModelForm):
         model = DailyRecord
         fields = [
             'habit',
+            'note',
         ]

@@ -26,6 +26,7 @@ class DailyRecord(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     habit = models.ForeignKey(
         Habit, on_delete=models.CASCADE, related_name="daily_records", null=True)
+    note = models.TextField(blank=True, null=True)
 
     class Meta:
         constraints = [models.UniqueConstraint(
