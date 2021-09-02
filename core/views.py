@@ -69,3 +69,8 @@ def delete_habit(request, pk):
         return redirect(to="list_habits")
 
     return render(request, "habits/delete_habit.html", {"habit": habit})
+
+@login_required
+def habit_record(request, pk):
+    daily_records = DailyRecord.objects.filter(pk=pk)
+    return render(request, "habits/habit_record.html", {"daily_records": daily_records, "pk": pk})

@@ -33,6 +33,7 @@
                     </div>
                     <footer class="card-footer">
                         <a href="{% url 'edit_habit' pk=habit.pk %}" class="card-footer-item has-text-dark">Edit</a><br />
+                        <a href="{% url 'habit_record' pk=habit.pk %}" class="card-footer-item has-text-dark">Record</a><br />
                         <a href="{% url 'delete_habit' pk=habit.pk %}" class="card-footer-item has-text-danger">Delete</a><br />
                     </footer>
                 </div>
