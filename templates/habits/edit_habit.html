@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero p-5">
+<section class="hero p-5 has-text-centered">
     <h1 class="title">Edit Habit</h1>
 </section>
 
@@ -20,6 +20,12 @@
         </form>
         <br>
         <div>
-            <a href="{% url 'delete_snippet' pk=snippet.pk %}"  class="button has-text-danger">Delete this Snippet</a>
+            <a href="{% url 'list_habits' %}"  class="button has-text-danger">Cancel</a></div>
         </div>
+        </div>
+    <div class="column is-quarter"></div>
+    
+    
+    </div>
+</div>
 {% endblock %}

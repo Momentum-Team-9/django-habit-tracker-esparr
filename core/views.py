@@ -69,6 +69,3 @@ def delete_habit(request, pk):
         return redirect(to="list_habits")
 
     return render(request, "habits/delete_habit.html", {"habit": habit})
-
-# @login_required
-# def create_dailyrecord(request, habit.pk):
