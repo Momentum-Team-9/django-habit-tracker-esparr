@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero p-5 has-text-centered">
+    <h1 class="title">Edit Habit</h1>
+</section>
+
+{% load bulma_tags %}
+{# Display a form #}
+<div class="columns has-text-centered">
+    <div class="column is-quarter"></div>
+    <div class="column is-half">
+        <div class="control m-5">
+            <form class="form" action="{% url 'edit_habit' pk=habit.pk %}" method="POST">
+            {% csrf_token %}
+            {{ form|bulma }}
+            <div class="field">
+                <button type="submit" class="button is-primary">Update</button>
+            </div>
+        </form>
+        <br>
+        <div>
+            <a href="{% url 'list_habits' %}"  class="button has-text-danger">Cancel</a></div>
+        </div>
+        </div>
+    <div class="column is-quarter"></div>
+    
+    
+    </div>
+</div>
+{% endblock %}

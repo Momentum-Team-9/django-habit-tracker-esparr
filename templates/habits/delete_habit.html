@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero p-5 has-text-centered">
+    <h1 class="title">Delete Habit</h1>
+</section>
+
+{% load bulma_tags %}
+{# Display a form #}
+<div class="m-5 has-text-centered">
+    <form action="{% url 'delete_habit' pk=habit.pk %}" method="POST">
+        {% csrf_token %}
+        <p class="subtitle pt-5">Are you sure you want to delete the habit <strong>{{ habit.title }}</strong></span>?</p>
+        <div>
+            <div class="field">
+                <button type="submit" class="button is-primary mt-5">Delete</button>
+            </div>
+            <div>
+                <a href="{% url 'list_habits' %}" class="button has-text-danger pl-4">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
