@@ -72,8 +72,9 @@ def delete_habit(request, pk):
 
 
 @login_required
-def habit_record(request, pk, habit_pk):
+def habit_record(request, pk):
     habit = Habit.objects.filter(pk=pk)
+    habit_pk = request.habit.pk
     daily_records = DailyRecord.objects.filter(pk=habit_pk)
     ordered_records = daily_records.order_by('-date')
     return render(request, "habits/habit_record.html", {"habit": habit, "daily_records": ordered_records, "pk": pk, "habit_pk": habit_pk})
