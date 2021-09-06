@@ -1,7 +1,7 @@
 import core
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Habit, DailyRecord
-from .forms import HabitForm
+from .forms import DailyRecordForm, HabitForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
@@ -72,9 +72,21 @@ def delete_habit(request, pk):
 
 
 @login_required
-def habit_record(request, pk):
-    habit = Habit.objects.filter(pk=pk)
-    habit_pk = request.habit.pk
-    daily_records = DailyRecord.objects.filter(pk=habit_pk)
-    ordered_records = daily_records.order_by('-date')
-    return render(request, "habits/habit_record.html", {"habit": habit, "daily_records": ordered_records, "pk": pk, "habit_pk": habit_pk})
+def create_record(request, pk):
+    habit = get_object_or_404(Habit, pk)
+
+    if request.method == "POST":
+        form = DailyRecordForm(data=request.POST)
+
+        if form.is_valid():
+            daily_record = form.save(commit=False)
+            daily_record.habit = habit
+            daily_record.save()
+
+    return render(request, "habits/create_record.html", {"form": form, "habit": habit, "pk": pk})
+
+
+@login_required
+def view_habit_records(request, pk):
+    daily_records = DailyRecord.objects.filter(pk=pk)
+    return render(request, "habits/view_habit_records.html", {"daily_records": daily_records, "pk": pk})
