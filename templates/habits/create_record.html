@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="hero p-5 has-text-centered">
-    <h1 class="title">Create a new Record</h1>
+    <h1 class="title">Create a new record at {% now "SHORT_DATETIME_FORMAT" %}</h1>
     <p class="subtitle"><a href="{% url 'list_habits' %}" class="has-text-grey">Return to Habits</a></p>
 </section>
 
@@ -12,7 +12,7 @@
     <div class="column is-quarter"></div>
     <div class="column is-half">
         <div class="control m-5 has-text-centered">
-            <form class="form" action="{% url 'create_record' pk=habit_pk %}" method="POST">
+            <form class="form" action="{% url 'create_record' habit_pk=habit.pk %}" method="POST">
                 {% csrf_token %}
                 {{ form|bulma }}
                 <div class="field">

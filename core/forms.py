@@ -16,6 +16,5 @@ class DailyRecordForm(forms.ModelForm):
     class Meta:
         model = DailyRecord
         fields = [
-            'habit',
             'note',
         ]
