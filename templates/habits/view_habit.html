@@ -32,10 +32,10 @@
                         </div>
                     </div>
                     <footer class="card-footer">
-                        <a href="{% url 'edit_habit' pk=pk %}" class="card-footer-item has-text-dark">Edit</a><br />
-                        <a href="{% url 'view_habit_records' pk=habit.pk %}" class="card-footer-item has-text-dark">Record Log</a><br />
+                        <a href="{% url 'edit_habit' pk=habit.pk %}" class="card-footer-item has-text-dark">Edit</a><br />
+                        <a href="{% url 'list_records' pk=habit.pk %}" class="card-footer-item has-text-dark">Record Log</a><br />
                         <a href="{% url 'create_record' habit_pk=habit.pk %}" class="card-footer-item has-text-dark">Add Record</a><br />
-                        <a href="{% url 'delete_habit' pk=pk %}" class="card-footer-item has-text-danger">Delete</a><br />
+                        <a href="{% url 'delete_habit' pk=habit.pk %}" class="card-footer-item has-text-danger">Delete</a><br />
                     </footer>
                 </div>
             </div>

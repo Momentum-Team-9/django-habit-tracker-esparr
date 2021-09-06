@@ -28,11 +28,9 @@ urlpatterns = [
     path("habits/<int:pk>/edit/", views.edit_habit, name="edit_habit"),
     path("habits/<int:pk>/delete/", views.delete_habit, name="delete_habit"),
     path("habits/<int:pk>/records/",
-         views.view_habit_records, name="view_habit_records"),
-    path("habits/<int:habit_pk>/new_record",
+         views.list_records, name="list_records"),
+    path("habits/<int:habit_pk>/<int:year>/<int:month>/<int:day>/",
          views.create_record, name="create_record"),
-    # path("habits/<int:habit_pk>/<yyyy:year>/<mm:month>/<dd:date>/",
-    #         views.date_record, name="date_record"),
 ]
 
 if settings.DEBUG:

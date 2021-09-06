@@ -1,4 +1,5 @@
 import core
+import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Habit, DailyRecord
 from .forms import DailyRecordForm, HabitForm
@@ -72,21 +73,34 @@ def delete_habit(request, pk):
 
 
 @login_required
-def create_record(request, pk):
-    habit = get_object_or_404(Habit, pk)
+def create_record(request, habit_pk, year=None, month=None, day=None):
 
-    if request.method == "POST":
-        form = DailyRecordForm(data=request.POST)
+    if year is None:
+        date_for_record = datetime.date.today()
+    else:
+        date_for_record = datetime.date(year, month, day)
+    next_day = date_for_record + datetime.timedelta(days=1)
+    prev_day = date_for_record + datetime.timedelta(days=-1)
 
-        if form.is_valid():
-            daily_record = form.save(commit=False)
-            daily_record.habit = habit
-            daily_record.save()
+    daily_record, _ = request.user.daily_records.get_or_create(
+        date=date_for_record)
+    # meal_plan, _ = MealPlan.objects.get_or_create(user=request.user, date=date_for_plan)
+    habit = Habit.objects.filter(pk=habit_pk)
 
-    return render(request, "habits/create_record.html", {"form": form, "habit": habit, "pk": pk})
+    return render(
+        request,
+        "core/create_record.html",
+        {
+            "daily_record": daily_record,
+            "habit": habit,
+            "date": date_for_record,
+            "next_day": next_day,
+            "prev_day": prev_day,
+        },
+    )
 
 
 @login_required
-def view_habit_records(request, pk):
+def list_records(request, pk):
     daily_records = DailyRecord.objects.filter(pk=pk)
-    return render(request, "habits/view_habit_records.html", {"daily_records": daily_records, "pk": pk})
+    return render(request, "habits/list_records.html", {"daily_records": daily_records, "pk": pk})
