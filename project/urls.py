@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
 from core import views
+from django.views.generic.dates import DateDetailView
+from core.models import Habit, DailyRecord
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,9 +31,14 @@ urlpatterns = [
     path("habits/<int:pk>/delete/", views.delete_habit, name="delete_habit"),
     path("habits/<int:pk>/records/",
          views.list_records, name="list_records"),
-    path("habits/<int:habit_pk>/<int:year>/<int:month>/<int:day>/",
+    path("habits/<int:pk>/new",
          views.create_record, name="create_record"),
 ]
+
+# # django.views.generic.dates.BaseDateDetailView
+# https: // docs.djangoproject.com/en/3.2/ref/class-based-views/generic-date-based/
+# path("habits/<int:year>/<str:month>/<int:day>/<int:pk>/'",
+#      DateDetailView.as_view(model=DailyRecord, date_field="date"), name="create_record"),
 
 if settings.DEBUG:
     import debug_toolbar

@@ -5,6 +5,7 @@ from .models import User, Habit, DailyRecord
 from .forms import DailyRecordForm, HabitForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.views.generic.dates import DateDetailView
 
 # Create your views here.
 
@@ -72,32 +73,52 @@ def delete_habit(request, pk):
     return render(request, "habits/delete_habit.html", {"habit": habit})
 
 
+# # django.views.generic.dates.BaseDateDetailView
+# https: // docs.djangoproject.com/en/3.2/ref/class-based-views/generic-date-based/
 @login_required
-def create_record(request, habit_pk, year=None, month=None, day=None):
-
-    if year is None:
-        date_for_record = datetime.date.today()
+def create_record(request, pk):
+    habit = Habit.objects.filter(pk=pk)
+    daily_record = habit.daily_records
+    if request.method == "GET":
+        form = DailyRecordForm()
     else:
-        date_for_record = datetime.date(year, month, day)
-    next_day = date_for_record + datetime.timedelta(days=1)
-    prev_day = date_for_record + datetime.timedelta(days=-1)
-
-    daily_record, _ = request.user.daily_records.get_or_create(
-        date=date_for_record)
-    # meal_plan, _ = MealPlan.objects.get_or_create(user=request.user, date=date_for_plan)
-    habit = Habit.objects.filter(pk=habit_pk)
+        form = DailyRecordForm(data=request.POST)
+        if form.is_valid():
+            daily_record = form.save(commit=False)
+            daily_record.save()
+            return redirect(to="list_habits")
 
     return render(
         request,
-        "core/create_record.html",
+        "habits/create_record.html",
         {
             "daily_record": daily_record,
             "habit": habit,
-            "date": date_for_record,
-            "next_day": next_day,
-            "prev_day": prev_day,
-        },
-    )
+            "pk": pk, })
+
+    # def create_record(request, pk, year=None, month=None, day=None):
+
+    # if year is None:
+    #     date_for_record = datetime.date.today()
+    # else:
+    #     date_for_record = datetime.date(year, month, day)
+
+    # daily_record, _ = DailyRecord.objects.get_or_create(
+    #     pk=pk, date=date_for_record)
+    # habit = Habit.objects.filter(pk=pk)
+
+    # return render(
+    #     request,
+    #     "habits/create_record.html",
+    #     {
+    #         "daily_record": daily_record,
+    #         "habit": habit,
+    #         "pk": pk,
+    #         "date": date_for_record,
+    #         "next_day": next_day,
+    #         "prev_day": prev_day,
+    #     },
+    # )
 
 
 @login_required

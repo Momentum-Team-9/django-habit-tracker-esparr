@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import fields
 from datetime import date
+from django.urls import reverse
 
 
 class User(AbstractUser):
@@ -32,5 +33,9 @@ class DailyRecord(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(
             fields=['habit', 'date'], name='unique_record')]
+
     def __str__(self):
         return f"{self.habit} {self.date}"
+
+    def get_absolute_url(self):
+        return reverse('record-detail', kwargs={'pk': self.pk})
