@@ -76,6 +76,7 @@ def delete_habit(request, pk):
 @login_required
 def create_record(request, habit_pk):
     habit = get_object_or_404(Habit, pk=habit_pk)
+    daily_record = DailyRecord.habit.get_object(pk=habit.pk)
 
     if request.method == "GET":
         form = DailyRecordForm()
@@ -87,7 +88,7 @@ def create_record(request, habit_pk):
             daily_record.save()
             return redirect(to="list_habits")
 
-    return render(request, "habits/create_record.html", {"form": form, "habit": habit, "pk": habit.pk})
+    return render(request, "habits/create_record.html", {"form": form, "daily_record": daily_record, "habit": habit, "pk": habit.pk})
 
 # # django.views.generic.dates.BaseDateDetailView
 # https: // docs.djangoproject.com/en/3.2/ref/class-based-views/generic-date-based/
@@ -118,5 +119,5 @@ def create_record(request, habit_pk):
 
 @login_required
 def list_records(request, pk):
-    daily_records = DailyRecord.objects.filter(pk=pk)
+    daily_records = Habit.objects.filter(pk=pk)
     return render(request, "habits/list_records.html", {"daily_records": daily_records, "pk": pk})
