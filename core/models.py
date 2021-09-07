@@ -36,6 +36,3 @@ class DailyRecord(models.Model):
 
     def __str__(self):
         return f"{self.habit} {self.date}"
-
-    def get_absolute_url(self):
-        return reverse('record-detail', kwargs={'pk': self.pk})

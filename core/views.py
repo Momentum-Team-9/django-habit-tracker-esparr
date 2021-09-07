@@ -28,7 +28,7 @@ def view_habit(request, pk):
     habit = get_object_or_404(Habit, pk=pk)
     return render(
         request, "habits/view_habit.html",
-        {"habit": habit, "pk": pk}
+        {"habit": habit, "pk": pk, "habit_pk": habit.pk}
     )
 
 
@@ -73,29 +73,23 @@ def delete_habit(request, pk):
     return render(request, "habits/delete_habit.html", {"habit": habit})
 
 
-# # django.views.generic.dates.BaseDateDetailView
-# https: // docs.djangoproject.com/en/3.2/ref/class-based-views/generic-date-based/
 @login_required
-def create_record(request, pk):
-    habit = Habit.objects.filter(pk=pk)
-    daily_record = habit.daily_records
+def create_record(request, habit_pk):
+    habit = get_object_or_404(Habit, pk=habit_pk)
+
     if request.method == "GET":
         form = DailyRecordForm()
     else:
         form = DailyRecordForm(data=request.POST)
         if form.is_valid():
-            daily_record = form.save(commit=False)
-            daily_record.save()
+            habit = form.save(commit=False)
+            habit.save()
             return redirect(to="list_habits")
 
-    return render(
-        request,
-        "habits/create_record.html",
-        {
-            "daily_record": daily_record,
-            "habit": habit,
-            "pk": pk, })
+    return render(request, "habits/create_record.html", {"form": form, "habit": habit, "pk": habit.pk})
 
+# # django.views.generic.dates.BaseDateDetailView
+# https: // docs.djangoproject.com/en/3.2/ref/class-based-views/generic-date-based/
     # def create_record(request, pk, year=None, month=None, day=None):
 
     # if year is None:

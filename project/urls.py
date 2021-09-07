@@ -31,7 +31,7 @@ urlpatterns = [
     path("habits/<int:pk>/delete/", views.delete_habit, name="delete_habit"),
     path("habits/<int:pk>/records/",
          views.list_records, name="list_records"),
-    path("habits/<int:pk>/new",
+    path("habits/<int:habit_pk>/new_record",
          views.create_record, name="create_record"),
 ]
 
