@@ -82,8 +82,9 @@ def create_record(request, habit_pk):
     else:
         form = DailyRecordForm(data=request.POST)
         if form.is_valid():
-            habit = form.save(commit=False)
-            habit.save()
+            daily_record = form.save(commit=False)
+            daily_record.habit = habit
+            daily_record.save()
             return redirect(to="list_habits")
 
     return render(request, "habits/create_record.html", {"form": form, "habit": habit, "pk": habit.pk})
