@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_extensions',
     'bulma',
+    'rest_framework',
 
     # Project-specific
     'core',
@@ -152,3 +153,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_on_heroku.settings(locals())
 del DATABASES['default']['OPTIONS']['sslmode']
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

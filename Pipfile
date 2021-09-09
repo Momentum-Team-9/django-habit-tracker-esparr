@@ -18,6 +18,9 @@ psycopg2-binary = "*"
 django-on-heroku = "*"
 gunicorn = "*"
 django-bulma = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.9"
