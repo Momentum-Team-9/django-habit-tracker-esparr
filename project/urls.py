@@ -31,8 +31,8 @@ urlpatterns = [
     path("habits/<int:pk>/delete/", views.delete_habit, name="delete_habit"),
     path("habits/<int:pk>/records/",
          views.list_records, name="list_records"),
-    path("habits/<int:habit_pk>/<int:year>/<int:month>/<int:day>/",
-         DateDetailView.as_view(model=DailyRecord, date_field="date"), name="create_record"),
+    path(r'habits/<int:habit_pk>/(?P<selected_day>\d{4}-\d{2}-\d{2})/$',
+         views.create_record, name='create_record'),
 ]
 
 if settings.DEBUG:

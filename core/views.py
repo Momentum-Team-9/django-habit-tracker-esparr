@@ -74,17 +74,19 @@ def delete_habit(request, pk):
 
 
 @login_required
-def create_record(request, year, month, day, habit_pk):
-    habit = get_object_or_404(Habit, pk=habit_pk)
-    daily_record = habit.daily_records.filter(pk=habit.pk)
-
-    if year is None:
-        date_for_record = datetime.date.today()
+def create_record(request, selected_day, habit_pk):
+    if selected_day is None:
+        date_record = datetime.date.today()
     else:
-        date_for_record = datetime.date(year, month, day)
+        date_record = datetime.datetime.strptime(
+            selected_day, '%Y-%M-%d').date()
+
+    habit = get_object_or_404(Habit, pk=habit_pk)
+    daily_record = habit.daily_records.filter(
+        habit_id=habit.pk).filter(date_record=selected_day)
 
     daily_record, _ = DailyRecord.objects.get_or_create(
-        pk=habit.pk, date=date_for_record)
+        pk=habit.pk, date=date_record)
 
     return render(
         request,
@@ -93,7 +95,7 @@ def create_record(request, year, month, day, habit_pk):
             "daily_record": daily_record,
             "habit": habit,
             "pk": habit_pk,
-            "date": date_for_record,
+            "date": date_record,
         },
     )
 
