@@ -74,44 +74,24 @@ def delete_habit(request, pk):
 
 
 @login_required
-def create_record(request, selected_day, habit_pk):
-    if selected_day is None:
-        date_record = datetime.date.today()
+def create_record(request, pk):
+    habit = get_object_or_404(Habit, pk=pk)
+
+    if request.method == "GET":
+        form = DailyRecordForm()
     else:
-        date_record = datetime.datetime.strptime(
-            selected_day, '%Y-%M-%d').date()
-
-    habit = get_object_or_404(Habit, pk=habit_pk)
-    daily_record = habit.daily_records.filter(
-        habit_id=habit.pk).filter(date_record=selected_day)
-
-    daily_record, _ = DailyRecord.objects.get_or_create(
-        pk=habit.pk, date=date_record)
+        form = DailyRecordForm(data=request.POST)
+        if form.is_valid():
+            daily_record = form.save(commit=False)
+            daily_record.habit = habit
+            daily_record.save()
+            return redirect(to="list_habits")
 
     return render(
         request,
         "habits/create_record.html",
-        {
-            "daily_record": daily_record,
-            "habit": habit,
-            "pk": habit_pk,
-            "date": date_record,
-        },
+        {"form": form, "habit": habit, "pk": pk},
     )
-
-    # if request.method == "GET":
-    #     form = DailyRecordForm()
-    #     daily_record, _ = DailyRecord.objects.get_or_create(
-    #         pk=habit.pk, date="date")
-    # else:
-    #     form = DailyRecordForm(data=request.POST)
-    #     if form.is_valid():
-    #         daily_record = form.save(commit=False)
-    #         daily_record.habit = habit
-    #         daily_record.save()
-    #         return redirect(to="list_habits")
-
-    # return render(request, "habits/create_record.html", {"form": form, "daily_record": daily_record, "habit": habit, "pk": habit.pk})
 
 
 @login_required

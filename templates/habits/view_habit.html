@@ -34,7 +34,7 @@
                     <footer class="card-footer">
                         <a href="{% url 'edit_habit' pk=habit.pk %}" class="card-footer-item has-text-dark">Edit</a><br />
                         <a href="{% url 'list_records' pk=habit.pk %}" class="card-footer-item has-text-dark">Record Log</a><br />
-                        <a href="{% url 'create_record' habit_pk=habit.pk selected_day=now 'SHORT_DATETIME_FORMAT' %}" class="card-footer-item has-text-dark">Create Record</a><br />
+                        <a href="{% url 'create_record' pk=habit.pk %}" class="card-footer-item has-text-dark">Create Record</a><br />
                         <a href="{% url 'delete_habit' pk=habit.pk %}" class="card-footer-item has-text-danger">Delete</a><br />
                     </footer>
                 </div>
