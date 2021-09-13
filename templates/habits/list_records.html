@@ -18,6 +18,8 @@
                     <tr>
                         <th>Date</th>
                         <th>Note</th>
+                        <th> </th>
+                        <th> </th>
                     </tr>
                 </thead>
                 {% for daily_record in daily_records %}
@@ -25,6 +27,8 @@
                     <tr>
                         <td>{{ daily_record.date|date:'Y-m-d' }}</td>
                         <td>{{ daily_record.note }}</td>
+                        <td><a href="{% url 'edit_record' record_pk=daily_record.pk %}" class="button">Edit</a></td>
+                        <td><a href="" class="button is-danger">Delete</a></td>
                     </tr>
                 </tbody>
                 {% endfor %}

@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import fields
 from datetime import date
 from django.urls import reverse
+from rest_framework.reverse import reverse as api_reverse
 
 
 class User(AbstractUser):

@@ -94,8 +94,27 @@ def create_record(request, pk):
     )
 
 
+def edit_record(request, record_pk):
+    daily_record = get_object_or_404(DailyRecord, pk=record_pk)
+
+    if request.method == "GET":
+        form = DailyRecordForm(instance=daily_record)
+    else:
+        form = DailyRecordForm(data=request.POST)
+        if form.is_valid():
+            daily_record = form.save(commit=False, instance=daily_record)
+            daily_record.save()
+            return redirect(to="list_habits")
+
+    return render(
+        request,
+        "habits/edit_record.html",
+        {"form": form, "daily_record": daily_record},
+    )
+
+
 @login_required
 def list_records(request, pk):
     habit = get_object_or_404(Habit, pk=pk)
     daily_records = habit.daily_records.all()
-    return render(request, "habits/list_records.html", {"daily_records": daily_records, "pk": pk})
+    return render(request, "habits/list_records.html", {"daily_records": daily_records, "pk": pk, 'habit': habit})

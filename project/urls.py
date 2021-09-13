@@ -15,14 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.urls import include, path
+from django.urls import include, path, include
 from core import views
 from django.views.generic.dates import DateDetailView
-from core.models import Habit, DailyRecord
+from core.models import Habit, DailyRecord, User
+from rest_framework import routers, serializers, viewsets
+from api.views import DailyRecordViewSet, HabitViewSet, UserViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'habit', HabitViewSet)
+# router.register(r'daily_record', RecordViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),
+    path('api/', include(router.urls)),
+    path('api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path("", views.index, name="index"),
     path("habits/", views.list_habits, name="list_habits"),
     path("habits/<int:pk>", views.view_habit, name="view_habit"),
@@ -33,6 +44,10 @@ urlpatterns = [
          views.list_records, name="list_records"),
     path("habits/<int:pk>/records/new",
          views.create_record, name='create_record'),
+    path("records/<int:record_pk>/edit",
+         views.edit_record, name='edit_record'),
+    # path("habits/<int:pk>/records/<str:date>/delete/",
+    #      views.delete_record, name="delete_record"),
 ]
 
 if settings.DEBUG:
