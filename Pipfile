@@ -21,6 +21,7 @@ django-bulma = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
+djoser = "*"
 
 [requires]
 python_version = "3.9"

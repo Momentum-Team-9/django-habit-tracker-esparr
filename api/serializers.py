@@ -3,7 +3,6 @@ from rest_framework import serializers
 
 
 class DailyRecordSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = DailyRecord
         fields = ("date", "note",)

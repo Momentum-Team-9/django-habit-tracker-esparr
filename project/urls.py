@@ -20,19 +20,21 @@ from core import views
 from django.views.generic.dates import DateDetailView
 from core.models import Habit, DailyRecord, User
 from rest_framework import routers, serializers, viewsets
-from api.views import DailyRecordViewSet, HabitViewSet, UserViewSet
+from api.views import DailyRecordViewSet, HabitViewSet, RecordCreateViewSet, UserViewSet
 
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'habit', HabitViewSet)
-# router.register(r'daily_record', RecordViewSet)
+router.register(r'daily_record', DailyRecordViewSet)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),
     path('api/', include(router.urls)),
+    path('api/habit/<int:habit_pk>/records',
+         RecordCreateViewSet.as_view(), name="api_create_record"),
     path('api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path("", views.index, name="index"),
     path("habits/", views.list_habits, name="list_habits"),
@@ -46,8 +48,8 @@ urlpatterns = [
          views.create_record, name='create_record'),
     path("records/<int:record_pk>/edit",
          views.edit_record, name='edit_record'),
-    # path("habits/<int:pk>/records/<str:date>/delete/",
-    #      views.delete_record, name="delete_record"),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
 ]
 
 if settings.DEBUG:
